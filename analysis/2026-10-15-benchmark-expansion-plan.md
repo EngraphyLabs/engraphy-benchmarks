@@ -182,6 +182,22 @@ not fit with the 1.5-hour margin; N = 15 (90 questions, 138 sessions) needs 1.7 
 does. The 90 question ids are those `bench.longmemeval.sample --per-type 15`
 prints: 15 of each type, 5 of them abstention. None is a plumbing question.
 
+### 4b. Leftover capacity (recorded 2026-10-15 21:50 AWST, while run A was ingesting and before any LongMemEval answer existed)
+
+If both N = 15 runs complete with capacity and time left, the queue runs two
+further independent runs at **N = 30** from the same sampler: 180 questions, 282
+sessions, 56 of them shared with the N = 15 set (the sampler draws afresh at each
+size). Then:
+
+- the N = 15 pair is reported whatever the N = 30 pair shows;
+- if the N = 30 pair completes, it becomes the headline LongMemEval figure, because
+  it is the larger sample, and this is decided now rather than after either result
+  is seen;
+- if only one N = 30 run completes, it is reported as a single run and the headline
+  stays the N = 15 pair.
+
+No configuration changes between any of these runs.
+
 ## 5. What a LongMemEval oracle figure can and cannot say
 
 The oracle setting hands the system only the sessions that contain the evidence, about
