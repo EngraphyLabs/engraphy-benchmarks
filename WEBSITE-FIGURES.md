@@ -95,8 +95,9 @@ Use these as written.
 
 - "91.4% on LoCoMo, mean of two independent runs, measured under the same
   conventions as the published Mem0, Mem0-graph and Zep figures."
-- "Ahead of Mem0, Mem0-graph and Zep on every LoCoMo category under the published
-  evaluation conventions, across two independent runs."
+- "Ahead of the Mem0, Mem0-graph and Zep figures in the Mem0 paper on every LoCoMo
+  category, under the conventions those figures were measured under, across two
+  independent runs." Always with Mem0 Platform's current figure beside it, below.
 - "Ahead on single-hop, temporal reasoning and open-domain even under Engraphy's
   own stricter convention, where the system is allowed to say it does not know."
 - "75.4% under Engraphy's own stricter convention, mean of two runs, range 74.8 to
@@ -109,10 +110,39 @@ Use these as written.
   the run-to-run spread."
 - "Measured on the seven LoCoMo conversations held out from all tuning."
 
-Why "ahead" is carried by these two runs: under the published conventions every
-margin is 16 points or more, and each run's own figure, not only the mean, sits
-above every competitor figure including Zep's self-reported one with its stated
-error. The run-to-run range is under a point.
+- "Among the leading memory systems on LoCoMo: 91.4% under the conventions of
+  Mem0's public benchmark harness, level with Mem0 Platform's own 91.8% to 92.5%
+  in that harness." LoCoMo is named in the same sentence, and Mem0 Platform's
+  figure is named beside it. See "Mem0 Platform's current figure" below.
+
+Why "ahead" of the paper figures is carried by these two runs: under the published
+conventions every margin over the Mem0 paper's figures, and over Zep's
+self-reported 75.14%, is 16 points or more, and each run's own figure, not only
+the mean, sits above every one of them. The run-to-run range is under a point.
+
+### Mem0 Platform's current figure
+
+`mem0ai/memory-benchmarks` at `4b61c5d`, the harness the like-for-like figure's
+conventions are vendored from, reports Mem0 Platform (its v3 memory pipeline) at
+**92.5% (1,425/1,540) with up to 200 memories in context, and 91.8% (1,414/1,540)
+with up to 50**, adversarial excluded, all ten conversations. Its per-category
+figures, averaged across cutoffs of 10 to 200 memories: single-hop 91.2%,
+multi-hop 91.3%, temporal 92.0%, open-domain 72.7%. Self-reported. The README does
+not state which answerer and judge produced them; the harness defaults to gpt-5
+for both.
+
+| | Engraphy, like-for-like | Mem0 Platform, same harness |
+|---|---|---|
+| excluding adversarial | 91.4% (range 91.0 to 91.8), at most 25 memories | 92.5% at 200, 91.8% at 50 |
+| single-hop | 93.3% | 91.2% |
+| multi-hop | 91.8% | 91.3% |
+| temporal reasoning | 92.2% | 92.0% |
+| open-domain | 69.3%, n=140 | 72.7% |
+
+Read honestly: **level overall**. Engraphy's range reaches Mem0's top-50 figure and
+sits below its top-200 figure, with an eighth of the context. Its categories are
+within a few points either way: ahead on single-hop, level on multi-hop and
+temporal, behind on open-domain. No "ahead of Mem0" wording may omit this figure.
 
 ## Stays "level", do not upgrade
 
@@ -127,10 +157,14 @@ error. The run-to-run range is under a point.
   "mean of two runs, range 91.0 to 91.8", never "91.4% +/- 0.4".
 - **Strict multi-hop as anything but behind.** 55.9% against 61.7 to 67.1, and
   identically in both runs.
-- **"Best memory system" or "best-in-class memory" as a standing property.** Two
-  runs, one benchmark, one split, our harness. The measured form is the
-  defensible one: "ahead of all three on every LoCoMo category under the
-  published conventions".
+- **"Best memory system", "best-in-class memory" or "the leading memory system",
+  with or without a benchmark named.** Unqualified, it is a claim about every
+  benchmark, and LoCoMo is the only benchmark with a figure here. Bounded to LoCoMo,
+  "the leading memory system on LoCoMo" is also not carried. Mem0 Platform reports
+  92.5% at top-200 and 91.8% at top-50 in the same harness whose conventions the
+  like-for-like figure uses, and Engraphy's 91.4% (range 91.0 to 91.8) is level
+  with that, not ahead of it. The approved LoCoMo-bounded form is "among the
+  leading", above.
 - **Open-domain without its size.** 140 questions pooled across both runs, 95%
   interval 61 to 76 like-for-like. Quote it with n=140 or with the interval.
 - **"Consistently", "stable", "repeatable", "typically".** Two runs support a
@@ -151,8 +185,9 @@ error. The run-to-run range is under a point.
   within 0.01. Method and sources in the report.
 - **Zep:** Mem0 published 65.99% for Zep; Zep self-reports 75.14%. The higher
   figure is used throughout.
-- **Mem0's own 92.5%** (mem0.ai/research) is not used as a comparator: it states
-  no retrieval budget, answerer or judge model, judge prompt or run count.
+- **Mem0 Platform's 92.5%** is measured in the same public harness as the
+  like-for-like figure, and sits beside every Mem0 comparison; see "Mem0 Platform's
+  current figure". Its answerer and judge models are not stated.
 - **The like-for-like figure is raw:** the confabulation controls that bounded the
   earlier three-conversation figure have not been rerun for these runs.
 - **Licence:** LoCoMo is CC BY-NC 4.0. Whether to use these figures in commercial
