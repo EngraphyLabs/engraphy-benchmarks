@@ -160,6 +160,28 @@ session and to prove the wiring. They are never part of a reported figure.
 so a weekly cap leaves one whole result rather than two halves. A figure is quoted
 only with two runs behind it.
 
+### 4a. The plumbing check, and N (recorded 2026-10-15 21:40, before run 1)
+
+Run `lme-smoke-20261015` on harness `cf74783` (dataset-path fix `9883405` after
+it), questions `07741c45`, `0bb5a684` and `031748ae_abs`, six sessions:
+
+| | |
+|---|---|
+| extractor output | 4,985, 6,036 and 8,130 tokens: 6,384 per question, 3,192 per session (LoCoMo run B: 3,417) |
+| time | 69, 82 and 105 s per question, about 43 s per session, three questions side by side |
+| wiring | all three conventions graded the same three answers consistently; the official judge replies with a bare yes or no, as upstream expects |
+
+**The rule gives N = 15.** A whole oracle run is 948 sessions, about 3.0M extractor
+output tokens, 4.2 times run B's whole ingest, and two of them do not fit. The
+budget left for LongMemEval after the LoCoMo controls is estimated at about 2.4
+run-B ingests of usage: about 2.3 five-hour windows remain, run B used about 1.5
+windows for one ingest plus its answering and grading, and the controls and this
+session take a share. Per question, extraction plus answering costs about 6,800
+output tokens. N = 20 (120 questions) needs 2.3 ingests for two runs, which does
+not fit with the 1.5-hour margin; N = 15 (90 questions, 138 sessions) needs 1.7 and
+does. The 90 question ids are those `bench.longmemeval.sample --per-type 15`
+prints: 15 of each type, 5 of them abstention. None is a plumbing question.
+
 ## 5. What a LongMemEval oracle figure can and cannot say
 
 The oracle setting hands the system only the sessions that contain the evidence, about
