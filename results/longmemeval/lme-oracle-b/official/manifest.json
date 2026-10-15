@@ -1,0 +1,313 @@
+{
+  "instrument": "bench.longmemeval_pass",
+  "source_run": "lme-oracle-b",
+  "source_engine_git_sha": "9883405554b556828a19216f639ccd97972d9173",
+  "engine_git_sha": "9883405554b556828a19216f639ccd97972d9173",
+  "git_tree_dirty": true,
+  "arm": "llm_wide-conversational/search_only/always_distinct/k25/official",
+  "dataset": {
+    "path": "longmemeval/longmemeval_oracle.json",
+    "digest": "sha256:821a2034d219ab45846873dd14c14f12cfe7776e73527a483f9dac095d38620c",
+    "questions_in_file": 500
+  },
+  "haystacks": [
+    "gpt4_2487a7cb",
+    "gpt4_385a5000",
+    "f0853d11",
+    "gpt4_70e84552",
+    "gpt4_2c50253f",
+    "gpt4_4cd9eba1",
+    "gpt4_93159ced_abs",
+    "0a995998",
+    "6cb6f249",
+    "gpt4_d12ceb0e",
+    "eeda8a6d",
+    "edced276_abs",
+    "07741c44",
+    "a1eacc2a",
+    "184da446",
+    "4d6b87c8",
+    "0f05491a",
+    "5a4f22c0",
+    "e493bb7c",
+    "618f13b2",
+    "18bc8abd",
+    "5831f84d",
+    "50635ada",
+    "dfde3500",
+    "06db6396",
+    "2133c1b5_abs",
+    "f685340e_abs",
+    "8a2466db",
+    "75832dbd",
+    "32260d93",
+    "195a1a1b",
+    "caf03d32",
+    "06f04340",
+    "1a1907b4",
+    "09d032c9",
+    "95228167",
+    "75f70248",
+    "d6233ab6",
+    "fca70973",
+    "a89d7624",
+    "1d4e3b97",
+    "07b6f563",
+    "6ae235be",
+    "fea54f57",
+    "dc439ea3",
+    "1d4da289",
+    "8aef76bc",
+    "1b9b7252",
+    "6222b6eb",
+    "fca762bc",
+    "7a8d0b71",
+    "8b9d4367",
+    "4baee567",
+    "ac031881",
+    "16c90bf4",
+    "eaca4986",
+    "1de5cff2",
+    "c960da58",
+    "3b6f954b",
+    "94f70d80",
+    "ad7109d1",
+    "8ebdbe50",
+    "75499fd8",
+    "95bcc1c8",
+    "a06e4cfe",
+    "8550ddae",
+    "15745da0",
+    "8a137a7f",
+    "8e9d538c",
+    "4100d0a0",
+    "a82c026e",
+    "29f2956b_abs",
+    "71017276",
+    "6e984301",
+    "eac54adc",
+    "gpt4_85da3956",
+    "2ebe6c92",
+    "gpt4_d6585ce9",
+    "gpt4_4929293b",
+    "gpt4_68e94288",
+    "7405e8b1",
+    "f35224e0",
+    "60036106",
+    "9ee3ecd6",
+    "77eafa52",
+    "0100672e",
+    "bb7c3b45",
+    "60159905",
+    "bc149d6b",
+    "37f165cf"
+  ],
+  "retrieval_configs": {
+    "llm_wide-conversational/search_only/always_distinct/k25": {
+      "strategy": "search_only",
+      "limit": 25,
+      "detail": "full"
+    }
+  },
+  "role_models": {
+    "reader": {
+      "source": "the run's own reader answers"
+    },
+    "judge": {
+      "provider": "claude-cli",
+      "model": "claude-sonnet-5"
+    }
+  },
+  "conventions": {
+    "label": "graded under LongMemEval's official judge prompts",
+    "source": {
+      "repository": "https://github.com/xiaowu0162/LongMemEval",
+      "commit": "9e0b455f4ef0e2ab8f2e582289761153549043fc",
+      "files": [
+        "src/evaluation/evaluate_qa.py",
+        "src/generation/run_generation.py"
+      ],
+      "license": "MIT"
+    },
+    "vendored": {
+      "evaluate_qa.upstream.py": "sha256:ecce9c4c79dc89d99534ac17b383a5cbb5b9f0c69ee98adaf0684742e3d95251",
+      "run_generation.upstream.py": "sha256:4f1eb3c69d7ad40f04065b9c0bc86f6582441018fc6ff751d162d66c95baf672"
+    },
+    "reader": "engraphy",
+    "answer_template_sha256": null,
+    "reproduced": [
+      "judge prompts: upstream get_anscheck_prompt, compiled from the pinned file and called as is, one prompt per question type, abstention prompt for _abs",
+      "judge prompt is the whole user turn, no system prompt",
+      "correct iff 'yes' appears in the lower-cased reply, as evaluate_qa.py reads it",
+      "one judge pass; every question counts, abstention included"
+    ],
+    "differences": [
+      "judge is the run's Claude judge model through the Claude Code CLI, not gpt-4o-2024-08-06 at temperature 0 with a 10-token limit; raw replies stored",
+      "memories are Engraphy's, retrieved by Engraphy's search at the run's width",
+      "answers are Engraphy's shipped reader, unchanged, as vendors report with their own answerer"
+    ]
+  },
+  "questions": 90,
+  "questions_without_saved_envelope": [],
+  "aggregate": {
+    "llm_wide-conversational/search_only/always_distinct/k25/official": {
+      "overall": {
+        "n": 90,
+        "correct": 60,
+        "accuracy": 0.6667,
+        "wilson_95": [
+          0.5642,
+          0.7555
+        ],
+        "abstained": 0,
+        "reader_errors": 0,
+        "judge_errors": 0,
+        "payload_bytes_p50": 8661,
+        "payload_bytes_p95": 20074,
+        "payload_bytes_mean": 9072,
+        "accuracy_per_1k_bytes": 0.0735,
+        "e2e_seconds_p50": 0.0,
+        "e2e_seconds_p95": 0.0,
+        "judge_seconds_p50": 6.344
+      },
+      "overall_excl_adversarial": {
+        "n": 85,
+        "correct": 55,
+        "accuracy": 0.6471,
+        "wilson_95": [
+          0.5411,
+          0.7403
+        ],
+        "abstained": 0,
+        "reader_errors": 0,
+        "judge_errors": 0,
+        "payload_bytes_p50": 8600,
+        "payload_bytes_p95": 20074,
+        "payload_bytes_mean": 8877,
+        "accuracy_per_1k_bytes": 0.0729,
+        "e2e_seconds_p50": 0.0,
+        "e2e_seconds_p95": 0.0,
+        "judge_seconds_p50": 6.35
+      },
+      "categories": {
+        "knowledge-update": {
+          "n": 15,
+          "correct": 15,
+          "accuracy": 1.0,
+          "wilson_95": [
+            0.7961,
+            1.0
+          ],
+          "abstained": 0,
+          "reader_errors": 0,
+          "judge_errors": 0,
+          "payload_bytes_p50": 12271,
+          "payload_bytes_p95": 20074,
+          "payload_bytes_mean": 12597,
+          "accuracy_per_1k_bytes": 0.0794,
+          "e2e_seconds_p50": 0.0,
+          "e2e_seconds_p95": 0.0,
+          "judge_seconds_p50": 6.55
+        },
+        "multi-session": {
+          "n": 15,
+          "correct": 9,
+          "accuracy": 0.6,
+          "wilson_95": [
+            0.3575,
+            0.8018
+          ],
+          "abstained": 0,
+          "reader_errors": 0,
+          "judge_errors": 0,
+          "payload_bytes_p50": 11857,
+          "payload_bytes_p95": 26061,
+          "payload_bytes_mean": 13859,
+          "accuracy_per_1k_bytes": 0.0433,
+          "e2e_seconds_p50": 0.0,
+          "e2e_seconds_p95": 0.0,
+          "judge_seconds_p50": 6.344
+        },
+        "single-session-assistant": {
+          "n": 15,
+          "correct": 4,
+          "accuracy": 0.2667,
+          "wilson_95": [
+            0.109,
+            0.5195
+          ],
+          "abstained": 0,
+          "reader_errors": 0,
+          "judge_errors": 0,
+          "payload_bytes_p50": 1913,
+          "payload_bytes_p95": 13709,
+          "payload_bytes_mean": 2521,
+          "accuracy_per_1k_bytes": 0.1058,
+          "e2e_seconds_p50": 0.0,
+          "e2e_seconds_p95": 0.0,
+          "judge_seconds_p50": 6.213
+        },
+        "single-session-preference": {
+          "n": 15,
+          "correct": 5,
+          "accuracy": 0.3333,
+          "wilson_95": [
+            0.1518,
+            0.5829
+          ],
+          "abstained": 0,
+          "reader_errors": 0,
+          "judge_errors": 0,
+          "payload_bytes_p50": 3594,
+          "payload_bytes_p95": 11856,
+          "payload_bytes_mean": 4233,
+          "accuracy_per_1k_bytes": 0.0787,
+          "e2e_seconds_p50": 0.0,
+          "e2e_seconds_p95": 0.0,
+          "judge_seconds_p50": 7.426
+        },
+        "single-session-user": {
+          "n": 15,
+          "correct": 13,
+          "accuracy": 0.8667,
+          "wilson_95": [
+            0.6212,
+            0.9626
+          ],
+          "abstained": 0,
+          "reader_errors": 0,
+          "judge_errors": 0,
+          "payload_bytes_p50": 6273,
+          "payload_bytes_p95": 12029,
+          "payload_bytes_mean": 7371,
+          "accuracy_per_1k_bytes": 0.1176,
+          "e2e_seconds_p50": 0.0,
+          "e2e_seconds_p95": 0.0,
+          "judge_seconds_p50": 6.047
+        },
+        "temporal-reasoning": {
+          "n": 15,
+          "correct": 14,
+          "accuracy": 0.9333,
+          "wilson_95": [
+            0.7018,
+            0.9881
+          ],
+          "abstained": 0,
+          "reader_errors": 0,
+          "judge_errors": 0,
+          "payload_bytes_p50": 12177,
+          "payload_bytes_p95": 36164,
+          "payload_bytes_mean": 13850,
+          "accuracy_per_1k_bytes": 0.0674,
+          "e2e_seconds_p50": 0.0,
+          "e2e_seconds_p95": 0.0,
+          "judge_seconds_p50": 6.273
+        }
+      }
+    }
+  },
+  "quota_stop": false,
+  "rows_answered_but_ungraded": 0,
+  "finished_at": "2026-10-15T15:01:28.953706+00:00"
+}
