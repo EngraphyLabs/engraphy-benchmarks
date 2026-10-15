@@ -44,3 +44,15 @@ text, so they are not committed, on the same policy as `locomo-settle-a`:
 
 Written by `scripts/redact_run.py` and `benchkit.redact.redact_offline_pass`,
 which checked every committed file against every LoCoMo question: none is quoted.
+
+## Validity controls (added 2026-10-15)
+
+| file | contents |
+|---|---|
+| `reference/validity_controls.jsonl` | control A: the strict judge's verdict on every accepted matched-convention answer; control B: both judges' verdicts on 60 deliberately mismatched answers. Ids, categories and booleans only |
+| `reference/evidence_recall.jsonl` | per non-adversarial question, the share of LoCoMo's cited evidence turns present in the memories the reader saw. Ids, categories and numbers only |
+| `reference/validity_controls.py` | the script that graded the controls |
+| `reference/validity_controls.manifest.json` | harness commit, judges, selection rules, counts, run times and the sha256 of every file above |
+
+The bounded figures (raw, defensible, floor) recompute from these with
+`python scripts/consolidate.py results/locomo/locomo-settle-a results/locomo/locomo-settle-b`.

@@ -53,3 +53,15 @@ The replay envelope files are also withheld for size: the seven arms come to
 about 320 MB. They rebuild from this run's store with
 `bench.completeness_recall`, and `retrieval-isolation.txt` carries the numbers
 they produced.
+
+## Validity controls (added 2026-10-15)
+
+| file | contents |
+|---|---|
+| `reference/validity_controls.jsonl` | control A: the strict judge's verdict on every accepted matched-convention answer; control B: both judges' verdicts on 60 deliberately mismatched answers. Ids, categories and booleans only |
+| `reference/evidence_recall.jsonl` | per non-adversarial question, the share of LoCoMo's cited evidence turns present in the memories the reader saw. Ids, categories and numbers only |
+| `reference/validity_controls.py` | the script that graded the controls |
+| `reference/validity_controls.manifest.json` | harness commit, judges, selection rules, counts, run times and the sha256 of every file above |
+
+The bounded figures (raw, defensible, floor) recompute from these with
+`python scripts/consolidate.py results/locomo/locomo-settle-a results/locomo/locomo-settle-b`.
