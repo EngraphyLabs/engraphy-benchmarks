@@ -100,8 +100,21 @@ published values, so the alignment is applied by code rather than by hand.
 | temporal | 92.2% (90.7 to 93.8), 415/450 | 55.51 | 58.13 | 49.31 | | +34.1 |
 | open-domain | 69.3% (68.6 to 70.0), 97/140 | 51.15 | 47.19 | 41.35 | | +18.2 |
 
-Engraphy holds the highest figure in every category, and each individual run's
-figure, not only the mean, sits above every competitor figure.
+Engraphy holds the highest figure in this table in every category, and each
+individual run's figure, not only the mean, sits above every figure in it.
+
+**Mem0 Platform's current figure, from the same harness.** `mem0ai/memory-benchmarks`
+at `4b61c5d`, the source of this convention, reports Mem0 Platform's v3 pipeline at
+92.5% (1,425/1,540) with up to 200 memories in context and 91.8% (1,414/1,540)
+with up to 50, all ten conversations. Per category, averaged over cutoffs of 10
+to 200: single-hop 91.2%, multi-hop 91.3%, temporal 92.0%, open-domain 72.7%.
+Self-reported; the README does not name the answerer and judge, and the harness
+defaults to gpt-5 for both. Against it, Engraphy's 91.4% raw is **level**: the run
+range, 91.0 to 91.8, reaches the top-50 figure and stays below the top-200 one,
+with at most 25 memories in context. By category, Engraphy is ahead on single-hop,
+level on multi-hop and temporal, and behind on open-domain. Mem0 Platform's
+figure carries no confabulation control, so the like-for-like comparison with it
+is raw against raw.
 
 **Why multi-hop differs so much between the conventions.** Multi-hop gold answers
 are typically multi-item. The strict judge requires every item; the matched judge
@@ -111,15 +124,51 @@ of the retrieval. Under the convention the published figures use, Engraphy answe
 multi-hop questions at least as completely as the leaders do; under its own
 stricter rule it does not yet answer them completely.
 
-**The like-for-like figure is raw.** Two controls bounded the earlier
-three-conversation figure (`results/locomo/locomo-definitive-20260917/reference/`):
-the strict judge re-graded every accepted matched-convention answer, and 60
-deliberately mismatched answers were graded by both judges, where the matched
-judge accepted 6 of 60 against the strict judge's 1 of 60. On that split the
-confabulation adjustment moved a raw 88.95% to a defensible 86.1% with a floor of
-75.6%. Those controls have not been rerun for these two runs, so they size the
-effect, roughly 3 points, rather than adjusting these figures. Rerunning them is
-the cheapest remaining way to harden this number.
+### 3a. The like-for-like figure, bounded by its validity controls
+
+Added 2026-10-15. The two controls that bounded the earlier three-conversation
+figure were rerun on both runs, on the same saved answers, with no new reading:
+
+- **Control A.** The strict judge, one pass, re-graded every answer the matched
+  judge accepted: 1,047 in run A and 1,057 in run B.
+- **Control B.** 60 accepted questions per run, each paired with the matched
+  answer to a different question from the same conversation, graded by both
+  judges. Every pair is wrong by construction, so an acceptance measures leniency.
+- **Evidence recall.** Per question, the share of LoCoMo's cited evidence turns
+  present in the memories the reader saw, computed from the saved envelopes with
+  no search and no model. Run A's mean, 87.49%, reproduces section 7's figure for
+  width 25 exactly.
+
+The **defensible** figure removes every credit that only the matched rules accept
+(control A says no) on a question none of whose evidence turns was retrieved. The
+**floor** keeps only answers the strict judge also accepts.
+
+| category | raw, mean (range) | defensible, mean (range) | floor, mean (range) |
+|---|---|---|---|
+| excluding adversarial | 91.4% (91.0 to 91.8) | **90.0% (89.6 to 90.4)**, 2,072/2,302, 95% [89, 91] | 81.2% (81.1 to 81.2) |
+| single-hop | 93.3% | 92.1% (91.6 to 92.7) | 88.8% |
+| multi-hop | 91.8% | 89.4% (88.1 to 90.6) | 62.9% |
+| temporal | 92.2% | 91.3% (89.8 to 92.9) | 81.6% |
+| open-domain | 69.3% | 67.9% (67.1 to 68.6), n=140 | 61.4% |
+
+Control B: the matched judge accepted 2 and 3 of 60 mismatched answers in runs A
+and B, and the strict judge 2 and 2. On the earlier split it was 6 against 1.
+
+What this establishes:
+
+- **The adjustment is 1.4 points**, about half the 3 points the earlier split
+  measured. The raw figure overstates by little.
+- The defensible figure sits **ahead of the Mem0 paper's Mem0, Mem0-graph and Zep
+  figures in every category**, and ahead of Zep's self-reported 75.14 overall.
+- The floor is the most conservative reading: every credit the strict rubric does
+  not also give is removed, including correct partial answers to multi-item
+  questions. On that reading multi-hop, 62.9%, sits inside the paper's published
+  range rather than above it, which is the grading-rule effect described above.
+
+Recompute: `python scripts/consolidate.py results/locomo/locomo-settle-a
+results/locomo/locomo-settle-b` prints all three. The controls are in each run's
+`reference/validity_controls.jsonl` with the script that produced them, and the
+recall in `reference/evidence_recall.jsonl`.
 
 ## 4. Strict convention: Engraphy's own default
 
@@ -237,9 +286,14 @@ grounds and because it was measured to cost 8 adversarial declines.
 
 - Every exact figure above, quoted as the mean of two named runs over a named
   split with the artifact path attached.
-- Under the matched convention, **ahead of Mem0, Mem0-graph and Zep on every
-  LoCoMo category**. The smallest margin is +16.3 points overall against Zep's
-  own self-reported figure, and each run's own figure clears every competitor.
+- Under the matched convention, **ahead of the Mem0 paper's Mem0, Mem0-graph and
+  Zep figures on every LoCoMo category**, raw and defensible. The smallest raw
+  margin is +16.3 points overall against Zep's own self-reported figure, and each
+  run's own figure clears every one of them.
+- **Level with Mem0 Platform's current same-harness figure**, 92.5% at top-200 and
+  91.8% at top-50, raw against raw.
+- The hardened like-for-like figure: **90.0% defensible**, range 89.6 to 90.4,
+  floor 81.2%.
 - Under the strict convention: ahead of the published Mem0, Mem0-graph and Zep
   figures overall, and ahead on single-hop, temporal and open-domain.
 - Run-to-run spread under 1.3 points on both conventions.
@@ -258,6 +312,8 @@ grounds and because it was measured to cost 8 adversarial declines.
   the honest form.
 - "Best memory system" as a standing property: two runs, one benchmark, one
   split, this harness. The measured claim is the defensible one.
+- "The leading memory system on LoCoMo": Mem0 Platform's same-harness figure is
+  level with it.
 - Open-domain quoted without its size: 140 questions pooled, 95% interval 61 to
   76 like-for-like.
 
@@ -270,14 +326,16 @@ grounds and because it was measured to cost 8 adversarial declines.
 3. **Answerer models differ from the published setups.** Engraphy uses
    `claude-opus-4-8` to read and `claude-sonnet-5` to judge; Mem0's 66.88 used
    GPT-4o-mini and is a mean of 10 runs.
-4. **The matched-convention figure is raw**, as described in section 3.
+4. **The matched-convention figure is bounded** by its validity controls, section
+   3a: 91.4% raw, 90.0% defensible, 81.2% floor.
 5. **Zep's figure is disputed.** Mem0 published 65.99 for Zep; Zep self-reports
    75.14 after what it describes as three implementation errors in that
    evaluation. The higher figure is used as the comparator throughout.
-6. **Mem0's own 92.5%** (mem0.ai/research) states no retrieval budget, answerer
-   or judge model, judge prompt or run count, so it is not used as a comparator.
-   Other vendor figures in the 90s found by search are self-reported with no
-   stated methodology and are likewise not used.
+6. **Mem0 Platform's 92.5%** is published in the harness this convention is
+   vendored from, with its retrieval budget stated, so it is a comparator: level,
+   section 3. Its answerer and judge models are not stated. Other vendor figures
+   in the 90s found by search are self-reported with no stated methodology and are
+   not used.
 7. **Multi-hop under the strict convention is a genuine deficit**, and the
    convention gap there is a grading-rule effect, explained in section 3.
 8. **Engraphy competes under the matched convention with at most 25 memories in

@@ -36,6 +36,17 @@ conventions the published figures use.** Mean of two runs, range 91.0 to 91.8.
 > held out from tuning, graded under the conventions vendored from
 > `mem0ai/memory-benchmarks` at `4b61c5d`.
 
+## The like-for-like figure, hardened
+
+**90.0% on LoCoMo after removing every credit only the permissive rubric gives
+where no evidence was retrieved.** Mean of two runs, range 89.6 to 90.4, 2,072 of
+2,302, 95% interval 89 to 91. The most conservative reading, keeping only answers
+Engraphy's strict judge also accepts, is 81.2%.
+
+> Caveat line: the raw 91.4% re-graded by Engraphy's strict judge and checked
+> against retrieved evidence; method in section 3a of the report. Mem0 Platform's
+> same-harness 92.5% carries no such control, so compare it with the raw 91.4%.
+
 ## Engraphy's own stricter number
 
 **75.4% on the same questions under Engraphy's strict convention**, where the
@@ -109,6 +120,8 @@ Use these as written.
 - "The wider extraction prompt adds 2.7 points on held-out data, more than double
   the run-to-run spread."
 - "Measured on the seven LoCoMo conversations held out from all tuning."
+- "90.0% on LoCoMo after a confabulation control, mean of two runs, range 89.6 to
+  90.4: re-graded by a stricter judge and checked against the evidence retrieved."
 
 - "Among the leading memory systems on LoCoMo: 91.4% under the conventions of
   Mem0's public benchmark harness, level with Mem0 Platform's own 91.8% to 92.5%
@@ -188,11 +201,13 @@ temporal, behind on open-domain. No "ahead of Mem0" wording may omit this figure
 - **Mem0 Platform's 92.5%** is measured in the same public harness as the
   like-for-like figure, and sits beside every Mem0 comparison; see "Mem0 Platform's
   current figure". Its answerer and judge models are not stated.
-- **The like-for-like figure is raw:** the confabulation controls that bounded the
-  earlier three-conversation figure have not been rerun for these runs.
-- **Licence:** LoCoMo is CC BY-NC 4.0. Whether to use these figures in commercial
-  marketing is an open decision, see `PUBLISH.md`. The dataset itself is not
-  redistributed.
+- **The like-for-like figure is bounded:** 91.4% raw, 90.0% defensible, 81.2%
+  floor, from the confabulation controls rerun on both runs. Quote the raw figure
+  against other raw figures, and the defensible figure where the claim needs to
+  survive a sceptic.
+- **Licence and attribution:** LoCoMo is CC BY-NC 4.0 and is not redistributed.
+  Every LoCoMo figure carries the attribution line in `PUBLISH.md`, "Dataset
+  licences and reporting figures".
 
 ## Other measurements in this repository
 
