@@ -209,6 +209,78 @@ temporal, behind on open-domain. No "ahead of Mem0" wording may omit this figure
   Every LoCoMo figure carries the attribution line in `PUBLISH.md`, "Dataset
   licences and reporting figures".
 
+## LongMemEval, oracle setting
+
+A second benchmark, the one competitors report most often after LoCoMo. Measured
+2026-10-15 and 16, two independent runs. The headline pair was fixed before either
+was run (`analysis/2026-10-15-benchmark-expansion-plan.md`, section 4b).
+
+**What was measured, and what was not.** In the *oracle* setting each question's
+history is cut to the sessions that hold its evidence, about two per question.
+Engraphy extracts those sessions into memories, retrieves from them and answers.
+This measures whether the memory keeps what was said, and how well it is read. It
+does **not** measure finding a fact among about 48 distracting sessions, which is
+what **LongMemEval-S** measures, and what Mem0, Zep, Supermemory and others report.
+Engraphy has no LongMemEval-S figure.
+
+**Source runs:**
+- `results/longmemeval/lme-oracle-n30-a` and `results/longmemeval/lme-oracle-n30-b`.
+- 180 questions: Mem0's public stratified sampler, `per_type=30, seed=42`, 30 of
+  each of LongMemEval's six types, 20 of them abstention.
+- Engine configuration unchanged from LoCoMo, and never tuned on LongMemEval.
+- Official judge prompts from `xiaowu0162/LongMemEval` at `9e0b455`, graded by
+  Claude Sonnet 5 rather than gpt-4o.
+
+Recompute with:
+
+    python scripts/consolidate_longmemeval.py results/longmemeval/lme-oracle-n30-a \
+                                              results/longmemeval/lme-oracle-n30-b
+
+| convention | mean of two runs | per run |
+|---|---|---|
+| official judge, official answer template | **82.2%**, 296/360, 95% [78, 86] | 82.2, 82.2 |
+| official judge, Engraphy's own reader | 73.3%, 264/360, 95% [69, 78] | 73.3, 73.3 |
+| strict, preference excluded | 81.0%, 243/300 | 80.7, 81.3 |
+
+Per type, official answer template: knowledge-update 93.3%, temporal reasoning
+93.3%, multi-session 93.3%, single-session-user 96.7%, preference 81.7%,
+**single-session-assistant 35.0%**. Engraphy's own reader declined all 20
+unanswerable questions correctly.
+
+> Caveat line: LongMemEval oracle setting (evidence sessions only), 180-question
+> stratified subset, two runs, official judge prompts graded by Claude Sonnet 5.
+> Not the LongMemEval-S setting other memory systems report. LongMemEval: Wu et
+> al., ICLR 2025, MIT licence.
+
+### Approved wording
+
+- "On LongMemEval's oracle setting, 82.2% of a 180-question stratified subset
+  under the official judge prompts, two runs." Always with "oracle setting" and the
+  subset size.
+- "93% on LongMemEval's knowledge-update and temporal-reasoning questions in the
+  oracle setting, two runs." With the setting named.
+
+### Stays behind, say so
+
+- **Against the LongMemEval paper's own oracle baseline**, gpt-4o reading the raw
+  evidence sessions at 87.0%, Engraphy's 82.2% is behind. The interval, 78 to 86,
+  does not reach it.
+- **Single-session-assistant, 35.0%.** These questions ask the system to recall
+  what the assistant said. Engraphy's extractor keeps what the user says and does,
+  and mostly not the assistant's side. Diagnosis:
+  `analysis/2026-10-15-longmemeval-oracle-diagnosis.md`.
+
+### Off-limits
+
+- **Any comparison with a vendor's LongMemEval figure** (Mem0 94.4%, Supermemory,
+  Mastra, Hindsight, Zep 71.2%). Those are LongMemEval-S, a harder setting, and
+  this is not.
+- **"LongMemEval" without "oracle".** It reads as the S setting everyone else
+  reports.
+- **"Leads on LongMemEval"**, in any form.
+- **The N = 15 runs as the headline.** They are smaller, reported in the diagnosis,
+  and the N = 30 pair was fixed in advance as the headline.
+
 ## Other measurements in this repository
 
 `results/locomo/locomo-extract-ab-20261002` holds the seen-split extraction

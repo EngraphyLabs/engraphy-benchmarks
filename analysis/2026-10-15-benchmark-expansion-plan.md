@@ -198,6 +198,15 @@ size). Then:
 
 No configuration changes between any of these runs.
 
+### 4c. Outcome (recorded 2026-10-16)
+
+All four runs completed: the N = 15 pair, then the N = 30 pair, each with both
+official passes. The N = 30 pair is the headline, as section 4b fixed: 82.2% under
+the official judge and answer template, and 73.3% with Engraphy's own reader, both
+runs identical overall. Figures and wording: `WEBSITE-FIGURES.md`. Diagnosis:
+`analysis/2026-10-15-longmemeval-oracle-diagnosis.md`. The window's leftover capacity then went to
+LoCoMo run C, the further run the earlier queue already named for that purpose.
+
 ## 5. What a LongMemEval oracle figure can and cannot say
 
 The oracle setting hands the system only the sessions that contain the evidence, about

@@ -60,6 +60,21 @@ Per type, run A, official judge with Engraphy's reader: single-session-user 80.0
 multi-session 73.3%, knowledge-update 93.3%, temporal reasoning 93.3%, abstention
 5 of 5.
 
+### The N = 30 pair, the pre-registered headline
+
+Two further runs on Mem0's sampler at `per_type=30` (180 questions, 56 shared with
+the N = 15 set) landed after this diagnosis was written. They confirm it at twice
+the size:
+
+| convention | N = 30 run A | N = 30 run B |
+|---|---|---|
+| official judge, official answer template | 82.2% | 82.2% |
+| official judge, Engraphy's reader | 73.3% | 73.3% |
+| strict, preference excluded | 80.7% | 81.3% |
+
+Single-session-assistant stays at 27% to 35% across conventions. Leaving it out,
+the official template scores 91.7% (275/300).
+
 ## 3. Method
 
 The stage a failure belongs to is decided by where the gold answer last existed:
