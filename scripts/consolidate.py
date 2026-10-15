@@ -153,6 +153,34 @@ def standing(means: dict[str, float]) -> None:
               + f"   {verdict}")
 
 
+def controls(ref_dir: pathlib.Path, ref_rows: list[dict]):
+    """The floor and defensible buckets of one run's reference figure, and control B.
+
+    Same definitions as `scripts/verify_definitive.py`. None until the run carries
+    both `validity_controls.jsonl` and `evidence_recall.jsonl` and control A covers
+    every accepted answer, so a partial control never bounds a figure.
+    """
+    ctl_path, ev_path = ref_dir / "validity_controls.jsonl", ref_dir / "evidence_recall.jsonl"
+    if not ctl_path.exists() or not ev_path.exists():
+        return None
+    ctl = rows(ctl_path)
+    a = {r["question_id"]: r["strict"] for r in ctl if r["control"] == "A_strict_on_reference_answer"}
+    b = [r for r in ctl if r["control"] == "B_mismatched"]
+    ev = {r["question_id"]: r["evidence_recall"] for r in rows(ev_path)}
+    accepted = [r for r in ref_rows if r["correct"]]
+    if any(r["question_id"] not in a for r in accepted) or len(b) < 60:
+        print(f"{ref_dir.parent.name}: validity controls incomplete; figure left unbounded")
+        return None
+    as_floor = [{**r, "correct": bool(r["correct"]) and a.get(r["question_id"], False)}
+                for r in ref_rows]
+    as_defensible = [{**r, "correct": bool(r["correct"]) and not (
+        not a[r["question_id"]] and ev.get(r["question_id"]) == 0)} if r["correct"] else r
+        for r in ref_rows]
+    return (buckets(as_floor), buckets(as_defensible),
+            {"n": len(b), "reference": sum(bool(r["reference"]) for r in b),
+             "strict": sum(bool(r["strict"]) for r in b)})
+
+
 def main() -> int:
     if len(sys.argv) < 2:
         raise SystemExit(__doc__)
@@ -162,6 +190,9 @@ def main() -> int:
     print(f"arm: {arm}")
     strict: dict[str, dict] = {}
     ref: dict[str, dict] = {}
+    floor: dict[str, dict] = {}
+    defensible: dict[str, dict] = {}
+    mismatched: dict[str, dict] = {}
     for arg in args:
         d = pathlib.Path(arg)
         ok, why = complete(d / "manifest.json")
@@ -183,6 +214,9 @@ def main() -> int:
             ref_rows = for_arm(rows(d / "reference" / "results.jsonl"), arm)
             if ref_rows:
                 ref[d.name] = buckets(ref_rows)
+                bounded = controls(d / "reference", ref_rows)
+                if bounded:
+                    floor[d.name], defensible[d.name], mismatched[d.name] = bounded
     if strict:
         strict_title = "strict default (reader may decline, judge requires every gold item)"
         means = report(strict_title, strict)
@@ -192,6 +226,16 @@ def main() -> int:
         # The published figures were measured under these conventions, not under
         # the strict default, so this is the comparable table of the two.
         standing(ref_means)
+    if defensible:
+        print("\n# the reference-convention figure, bounded by its validity controls")
+        print("  floor: accepted answers the strict judge also accepts (control A).")
+        print("  defensible: raw, less each credit only the reference rules accept for a")
+        print("  question none of whose evidence turns was in the retrieved memory.")
+        standing(report("reference conventions, defensible", defensible))
+        standing(report("reference conventions, floor", floor))
+        for run, m in mismatched.items():
+            print(f"  {run}: control B, {m['n']} deliberately mismatched answers: reference "
+                  f"judge accepts {m['reference']}, strict judge accepts {m['strict']}")
     if not strict:
         print("\nno complete run yet; nothing is averaged")
     return 0
