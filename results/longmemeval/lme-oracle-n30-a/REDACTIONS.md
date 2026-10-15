@@ -29,3 +29,12 @@ engine code identical to `aa7daa2`. Dataset `longmemeval_oracle.json`, sha256
 
 Recompute: `python scripts/consolidate_longmemeval.py results/longmemeval/lme-oracle-n30-a` (and `-n30-b` once committed). The N = 30 pair is the pre-registered headline once both runs complete; plan section 4b.
 Diagnosis: `analysis/2026-10-15-longmemeval-oracle-diagnosis.md`.
+
+## Why the manifest says `git_tree_dirty: true`
+
+This run started at 23:06:51 AWST, 26 seconds before harness commit `5a9a363`.
+At launch the worktree held one uncommitted file, `bench/longmemeval/diagnose.py`,
+an offline diagnostic that no measurement imports. `git diff 9883405 5a9a363` is
+that file and nothing else, so the code that ingested, read and graded this run is
+`9883405` exactly, the same as both N = 15 runs. Run B of this pair records
+`5a9a363` with a clean tree.
