@@ -56,6 +56,27 @@ states the methodology, the category alignment and every caveat, and
 [WEBSITE-FIGURES.md](WEBSITE-FIGURES.md) carries the publishable set with the
 wording each figure supports.
 
+The matched-convention figure is bounded by validity controls rerun on both runs:
+91.4% raw, **90.0% defensible** (range 89.6 to 90.4) and 81.2% floor. The controls
+and their manifests are in each run's `reference/`, and the same command prints all
+three.
+
+### LongMemEval, oracle setting
+
+Two runs on 180 questions of LongMemEval's oracle setting (evidence sessions only),
+chosen by Mem0's public seeded sampler, with the engine configuration unchanged from
+LoCoMo: **82.2%** under LongMemEval's official judge prompts and answer template,
+73.3% with Engraphy's own reader. This is not the LongMemEval-S setting other memory
+systems report.
+
+    python scripts/consolidate_longmemeval.py results/longmemeval/lme-oracle-n30-a \
+                                              results/longmemeval/lme-oracle-n30-b
+
+The [diagnosis](analysis/2026-10-15-longmemeval-oracle-diagnosis.md) stages every
+failure at extraction, retrieval or reading. The
+[benchmark plan](analysis/2026-10-15-benchmark-expansion-plan.md) surveys what
+competitors report and records what was decided before each run.
+
 The 2026-09-17 run is also graded under the reference harness conventions, for
 comparability with published figures: 86.1% excluding adversarial, range 75.6% to
 88.9%, with its validity controls in `reference/`. `python scripts/verify_definitive.py`
