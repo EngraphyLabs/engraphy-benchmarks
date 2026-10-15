@@ -1,0 +1,55 @@
+{
+  "benchmark": "longmemeval",
+  "config_version": 1,
+  "description": "How the LongMemEval oracle runs were produced, end to end. Every value here is what the committed manifests record; the commands reproduce the N = 30 headline pair (lme-oracle-n30-a and -b) and, with --per-type 15, the N = 15 pair.",
+  "engine": {
+    "repository": "https://github.com/EngraphyLabs/engraphy",
+    "branch": "bench/longmemeval-20261015",
+    "commits": {
+      "measured": "9883405554b556828a19216f639ccd97972d9173",
+      "measured_note": "lme-oracle-a, lme-oracle-b and lme-oracle-n30-a ran at 9883405; lme-oracle-n30-b at 5a9a363, which adds only the offline bench/longmemeval/diagnose.py.",
+      "diagnosis": "5a9a363"
+    },
+    "engine_code_note": "git diff aa7daa2 -- engraphy/ is empty at both commits: the engine is the one both LoCoMo held-out runs measured. The branch adds harness work only: the LongMemEval loader with date-ordered sessions, the question date shown to the reader, concurrent haystack ingest, and the official conventions."
+  },
+  "dataset": {
+    "name": "LongMemEval, oracle setting (longmemeval_oracle.json)",
+    "url": "https://huggingface.co/datasets/xiaowu0162/longmemeval-cleaned/resolve/98d7416c24c778c2fee6e6f3006e7a073259d48f/longmemeval_oracle.json",
+    "revision": "98d7416c24c778c2fee6e6f3006e7a073259d48f",
+    "sha256": "821a2034d219ab45846873dd14c14f12cfe7776e73527a483f9dac095d38620c",
+    "bytes": 15388478,
+    "license": "MIT",
+    "citation": "Wu et al., LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory, ICLR 2025, arXiv 2410.10813",
+    "place_at": "datasets/longmemeval/longmemeval_oracle.json in the engine checkout"
+  },
+  "questions": {
+    "sampler": "bench.longmemeval.sample, a statement-for-statement reproduction of sample_questions_stratified from mem0ai/memory-benchmarks@4b61c5d31b9c668a12b4f5e78064248a02c82d2b",
+    "headline": {"per_type": 30, "seed": 42, "questions": 180},
+    "also_run": {"per_type": 15, "seed": 42, "questions": 90},
+    "plumbing_only_never_scored": ["07741c45", "0bb5a684", "031748ae_abs"]
+  },
+  "official_conventions": {
+    "source": "https://github.com/xiaowu0162/LongMemEval",
+    "commit": "9e0b455f4ef0e2ab8f2e582289761153549043fc",
+    "vendored": "bench/prompts/longmemeval/*.upstream* in the engine checkout, pinned by sha256",
+    "judge_model_here": "claude-sonnet-5 (upstream uses gpt-4o-2024-08-06)"
+  },
+  "models": {"extractor": "claude-opus-4-8", "reader": "claude-opus-4-8", "judge": "claude-sonnet-5", "route": "claude-cli"},
+  "commands": [
+    "git clone https://github.com/EngraphyLabs/engraphy.git && cd engraphy && git checkout 9883405554b556828a19216f639ccd97972d9173",
+    "mkdir -p datasets/longmemeval && curl -L -o datasets/longmemeval/longmemeval_oracle.json <dataset.url>   # then check the sha256",
+    "IDS=$(python -m bench.longmemeval.sample --per-type 30)",
+    "python -m bench.core.run --benchmark longmemeval --dataset datasets/longmemeval/longmemeval_oracle.json --haystacks $IDS --arm llm_wide-conversational:search_only:k=25 --judge claude --reader-stance grounded --reader-contract verify --phases ingest,answer,judge,calibrate,report --ingest-concurrency 6 --concurrency 6 --judge-concurrency 8 --calibration-sample 40 --run-id lme-oracle-n30-a",
+    "python -m bench.longmemeval_pass --run-dir runs/lme-oracle-n30-a --reader engraphy --concurrency 6 --judge-concurrency 8",
+    "python -m bench.longmemeval_pass --run-dir runs/lme-oracle-n30-a --reader official --concurrency 6 --judge-concurrency 8",
+    "# repeat the last three with --run-id lme-oracle-n30-b for the second run",
+    "# then, from this repository:",
+    "python scripts/redact_longmemeval.py <engine>/runs/lme-oracle-n30-a results/longmemeval/lme-oracle-n30-a --dataset <engine>/datasets/longmemeval/longmemeval_oracle.json",
+    "python scripts/consolidate_longmemeval.py results/longmemeval/lme-oracle-n30-a results/longmemeval/lme-oracle-n30-b"
+  ],
+  "requirements": "As for LoCoMo (README, Reproduce): Docker with a pgvector Postgres at the engine's schema, Python 3.12 or later, and the Claude Code CLI signed in. Each run draws on the signed-in account's usage.",
+  "known_limits": [
+    "On Windows, an extraction window longer than about 32 KB fails at launch on the CLI route and is recorded as empty; 13 of the 500 oracle questions are affected. Diagnosis section 5.",
+    "On the CLI route the model can see the signed-in account's identity; scripts/redact_longmemeval.py removes it from committed copies."
+  ]
+}
