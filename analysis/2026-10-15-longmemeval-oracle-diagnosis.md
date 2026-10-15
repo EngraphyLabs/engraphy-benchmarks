@@ -328,3 +328,14 @@ on it, and LoCoMo's stores, whose speakers are named, show none. Every committed
 LongMemEval file has those occurrences replaced with `[operator]`, by
 `scripts/redact_longmemeval.py`. Running the extractor with the account's identity
 withheld is a harness fix to make before the next run.
+
+## An open confound on the CLI route, all runs
+
+The operator-identity leak shows that the Claude Code CLI passes some of the
+signed-in account's context to the model even with `--system-prompt` set. It has
+not been tested whether the operator's user-level `CLAUDE.md`, which carries
+writing-style rules, also reaches the extractor, reader and judge. If it does, it
+applies equally to every arm and run on this route, LoCoMo included, so it cannot
+explain a difference between them. It could still shift an absolute figure. The
+fix is to run the harness's CLI calls with user settings and account context
+withheld, then measure whether any figure moves.

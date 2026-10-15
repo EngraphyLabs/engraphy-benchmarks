@@ -23,7 +23,7 @@ Correction to the earlier position that Mem0's 92.5% states no methodology. The
 mem0ai/memory-benchmarks README at 4b61c5d, the commit our matched convention is
 vendored from, reports Mem0 Platform v3 at 92.5% (top-200) and 91.8% (top-50) on
 1,540 questions. Engraphy's 91.4% raw (top-25, seven held-out conversations) is
-level with it, not ahead. By category: ahead on single-hop (93.3 vs 91.2), level on
+level with the top-50 figure and 0.7 to 1.5 points below the top-200 one, not ahead. By category: ahead on single-hop (93.3 vs 91.2), level on
 multi-hop and temporal, behind on open-domain (69.3 vs 72.7). Decision: "the leading
 memory system on LoCoMo" is not approved; "among the leading memory systems on
 LoCoMo", with Mem0 Platform's figure beside it, is. Mem0's answerer and judge models

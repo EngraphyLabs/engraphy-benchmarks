@@ -65,8 +65,9 @@ three.
 
 Two runs on 180 questions of LongMemEval's oracle setting (evidence sessions only),
 chosen by Mem0's public seeded sampler, with the engine configuration unchanged from
-LoCoMo: **82.2%** under LongMemEval's official judge prompts and answer template,
-73.3% with Engraphy's own reader. This is not the LongMemEval-S setting other memory
+LoCoMo, both under LongMemEval's official judge prompts: **73.3%** with Engraphy's
+own reader and **82.2%** with the official answer template. This is not the
+LongMemEval-S setting other memory
 systems report.
 
     python scripts/consolidate_longmemeval.py results/longmemeval/lme-oracle-n30-a \

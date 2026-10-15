@@ -201,11 +201,26 @@ No configuration changes between any of these runs.
 ### 4c. Outcome (recorded 2026-10-16)
 
 All four runs completed: the N = 15 pair, then the N = 30 pair, each with both
-official passes. The N = 30 pair is the headline, as section 4b fixed: 82.2% under
-the official judge and answer template, and 73.3% with Engraphy's own reader, both
+official passes. The N = 30 pair is the headline, as section 4b fixed. Section 4
+did not name one convention as the headline, so both are quoted together: 73.3%
+with Engraphy's own reader and 82.2% with the official answer template, under the
+official judge, both
 runs identical overall. Figures and wording: `WEBSITE-FIGURES.md`. Diagnosis:
 `analysis/2026-10-15-longmemeval-oracle-diagnosis.md`. The window's leftover capacity then went to
 LoCoMo run C, the further run the earlier queue already named for that purpose.
+
+### 4d. LoCoMo run C (recorded 2026-10-16 01:18 AWST, as it started, before it had a single answer)
+
+Run C repeats the held-out LoCoMo measurement exactly, through
+`runs/settle_driver.py` at the same harness, ingest included, followed by its own
+validity controls. Its role is fixed now:
+
+- **If run C's strict pass, matched-convention pass and validity controls all
+  complete, it is folded into a three-run mean, whatever it shows.** Every LoCoMo
+  figure is then restated as the mean of three runs, with a standard deviation
+  beside the range.
+- **If any part is incomplete when the window closes**, run C is reported
+  separately as a partial run, and the two-run figures stand unchanged.
 
 ## 5. What a LongMemEval oracle figure can and cannot say
 

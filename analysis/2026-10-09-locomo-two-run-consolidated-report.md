@@ -109,9 +109,10 @@ at `4b61c5d`, the source of this convention, reports Mem0 Platform's v3 pipeline
 with up to 50, all ten conversations. Per category, averaged over cutoffs of 10
 to 200: single-hop 91.2%, multi-hop 91.3%, temporal 92.0%, open-domain 72.7%.
 Self-reported; the README does not name the answerer and judge, and the harness
-defaults to gpt-5 for both. Against it, Engraphy's 91.4% raw is **level**: the run
-range, 91.0 to 91.8, reaches the top-50 figure and stays below the top-200 one,
-with at most 25 memories in context. By category, Engraphy is ahead on single-hop,
+defaults to gpt-5 for both. Against it, Engraphy's 91.4% raw is **level with the
+top-50 figure and 0.7 to 1.5 points below the top-200 figure**: both runs, 91.0 and
+91.8, and the pooled interval, 90 to 92, sit below 92.5. That is with at most 25
+memories in context, on 7 of the 10 conversations. By category, Engraphy is ahead on single-hop,
 level on multi-hop and temporal, and behind on open-domain. Mem0 Platform's
 figure carries no confabulation control, so the like-for-like comparison with it
 is raw against raw.
@@ -290,8 +291,8 @@ grounds and because it was measured to cost 8 adversarial declines.
   Zep figures on every LoCoMo category**, raw and defensible. The smallest raw
   margin is +16.3 points overall against Zep's own self-reported figure, and each
   run's own figure clears every one of them.
-- **Level with Mem0 Platform's current same-harness figure**, 92.5% at top-200 and
-  91.8% at top-50, raw against raw.
+- **Level with Mem0 Platform's same-harness 91.8% at top-50, and 0.7 to 1.5 points
+  below its 92.5% at top-200**, raw against raw.
 - The hardened like-for-like figure: **90.0% defensible**, range 89.6 to 90.4,
   floor 81.2%.
 - Under the strict convention: ahead of the published Mem0, Mem0-graph and Zep
@@ -312,8 +313,8 @@ grounds and because it was measured to cost 8 adversarial declines.
   the honest form.
 - "Best memory system" as a standing property: two runs, one benchmark, one
   split, this harness. The measured claim is the defensible one.
-- "The leading memory system on LoCoMo": Mem0 Platform's same-harness figure is
-  level with it.
+- "The leading memory system on LoCoMo": Mem0 Platform's same-harness figures are
+  level with Engraphy's at top-50 and above it at top-200.
 - Open-domain quoted without its size: 140 questions pooled, 95% interval 61 to
   76 like-for-like.
 
@@ -340,3 +341,8 @@ grounds and because it was measured to cost 8 adversarial declines.
    convention gap there is a grading-rule effect, explained in section 3.
 8. **Engraphy competes under the matched convention with at most 25 memories in
    context** where the convention permits 200.
+9. **The Claude CLI route may pass account context to the model.** Found
+   2026-10-15 on LongMemEval: the model saw the signed-in operator's identity. It
+   has not been tested whether user-level settings also reach the extractor,
+   reader and judge. If they do, the effect applies to every run alike. See
+   `analysis/2026-10-15-longmemeval-oracle-diagnosis.md`, last section.

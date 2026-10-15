@@ -124,9 +124,10 @@ Use these as written.
   90.4: re-graded by a stricter judge and checked against the evidence retrieved."
 
 - "Among the leading memory systems on LoCoMo: 91.4% under the conventions of
-  Mem0's public benchmark harness, level with Mem0 Platform's own 91.8% to 92.5%
-  in that harness." LoCoMo is named in the same sentence, and Mem0 Platform's
-  figure is named beside it. See "Mem0 Platform's current figure" below.
+  Mem0's public benchmark harness, level with Mem0 Platform's 91.8% at up to 50
+  memories in context and just below its 92.5% at up to 200, with Engraphy using at
+  most 25." LoCoMo is named in the same sentence, and both Mem0 Platform figures
+  beside it. See "Mem0 Platform's current figure" below.
 
 Why "ahead" of the paper figures is carried by these two runs: under the published
 conventions every margin over the Mem0 paper's figures, and over Zep's
@@ -152,8 +153,9 @@ for both.
 | temporal reasoning | 92.2% | 92.0% |
 | open-domain | 69.3%, n=140 | 72.7% |
 
-Read honestly: **level overall**. Engraphy's range reaches Mem0's top-50 figure and
-sits below its top-200 figure, with an eighth of the context. Its categories are
+Read precisely: **level with the top-50 figure, 0.7 to 1.5 points below the
+top-200 figure.** Both runs, 91.0 and 91.8, and the pooled interval, 90 to 92, sit
+below 92.5. Engraphy uses at most 25 memories, on 7 of the 10 conversations. Its categories are
 within a few points either way: ahead on single-hop, level on multi-hop and
 temporal, behind on open-domain. No "ahead of Mem0" wording may omit this figure.
 
@@ -175,8 +177,8 @@ temporal, behind on open-domain. No "ahead of Mem0" wording may omit this figure
   benchmark, and LoCoMo is the only benchmark with a figure here. Bounded to LoCoMo,
   "the leading memory system on LoCoMo" is also not carried. Mem0 Platform reports
   92.5% at top-200 and 91.8% at top-50 in the same harness whose conventions the
-  like-for-like figure uses, and Engraphy's 91.4% (range 91.0 to 91.8) is level
-  with that, not ahead of it. The approved LoCoMo-bounded form is "among the
+  like-for-like figure uses. Engraphy's 91.4% (range 91.0 to 91.8) is level with
+  the top-50 figure and below the top-200 one, not ahead of either. The approved LoCoMo-bounded form is "among the
   leading", above.
 - **Open-domain without its size.** 140 questions pooled across both runs, 95%
   interval 61 to 76 like-for-like. Quote it with n=140 or with the interval.
@@ -238,14 +240,22 @@ Recompute with:
 
 | convention | mean of two runs | per run |
 |---|---|---|
+| official judge, Engraphy's own reader (how vendors report: their own answerer, the official judge) | **73.3%**, 264/360, 95% [69, 78] | 73.3, 73.3 |
 | official judge, official answer template | **82.2%**, 296/360, 95% [78, 86] | 82.2, 82.2 |
-| official judge, Engraphy's own reader | 73.3%, 264/360, 95% [69, 78] | 73.3, 73.3 |
 | strict, preference excluded | 81.0%, 243/300 | 80.7, 81.3 |
 
-Per type, official answer template: knowledge-update 93.3%, temporal reasoning
-93.3%, multi-session 93.3%, single-session-user 96.7%, preference 81.7%,
-**single-session-assistant 35.0%**. Engraphy's own reader declined all 20
-unanswerable questions correctly.
+Neither convention was named as the headline in advance, so both are quoted
+together, Engraphy's own reader first.
+
+| type | Engraphy's reader | official template |
+|---|---|---|
+| knowledge-update | 96.7% | 93.3% |
+| temporal reasoning | 90.0% | 93.3% |
+| multi-session | 93.3% | 93.3% |
+| single-session-user | 90.0% | 96.7% |
+| single-session-preference | 43.3% | 81.7% |
+| **single-session-assistant** | **26.7%** | **35.0%** |
+| abstention (inside the types above) | 100% (20/20) | 85.0% (17/20) |
 
 > Caveat line: LongMemEval oracle setting (evidence sessions only), 180-question
 > stratified subset, two runs, official judge prompts graded by Claude Sonnet 5.
@@ -254,17 +264,19 @@ unanswerable questions correctly.
 
 ### Approved wording
 
-- "On LongMemEval's oracle setting, 82.2% of a 180-question stratified subset
-  under the official judge prompts, two runs." Always with "oracle setting" and the
-  subset size.
-- "93% on LongMemEval's knowledge-update and temporal-reasoning questions in the
-  oracle setting, two runs." With the setting named.
+- "On LongMemEval's oracle setting, 73.3% with Engraphy's own reader and 82.2% with
+  the benchmark's official answer template, both under the official judge prompts,
+  on a 180-question stratified subset, two runs." Both figures, the setting and
+  the subset size, every time.
+- "90% or more on LongMemEval's knowledge-update, temporal-reasoning and
+  multi-session questions in the oracle setting, under both answer conventions,
+  two runs." With the setting named.
 
 ### Stays behind, say so
 
 - **Against the LongMemEval paper's own oracle baseline**, gpt-4o reading the raw
-  evidence sessions at 87.0%, Engraphy's 82.2% is behind. The interval, 78 to 86,
-  does not reach it.
+  evidence sessions at 87.0%, Engraphy is behind under both conventions: 73.3%
+  (95% interval 69 to 78) and 82.2% (78 to 86).
 - **Single-session-assistant, 35.0%.** These questions ask the system to recall
   what the assistant said. Engraphy's extractor keeps what the user says and does,
   and mostly not the assistant's side. Diagnosis:
