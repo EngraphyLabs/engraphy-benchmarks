@@ -27,7 +27,7 @@ engine code identical to `aa7daa2`. Dataset `longmemeval_oracle.json`, sha256
   of the operator's name or email in this run's files are replaced with
   `[operator]` by `scripts/redact_longmemeval.py`. No verdict changes.
 
-Recompute: `python scripts/consolidate_longmemeval.py results/longmemeval/lme-oracle-n30-a` (and `-n30-b` once committed). The N = 30 pair is the pre-registered headline once both runs complete; plan section 4b.
+Recompute: `python scripts/consolidate_longmemeval.py results/longmemeval/lme-oracle-n30-a results/longmemeval/lme-oracle-n30-b`. This pair is the pre-registered LongMemEval headline; plan section 4b.
 Diagnosis: `analysis/2026-10-15-longmemeval-oracle-diagnosis.md`.
 
 ## Why the manifest says `git_tree_dirty: true`
