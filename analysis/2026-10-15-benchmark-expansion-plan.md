@@ -160,7 +160,7 @@ session and to prove the wiring. They are never part of a reported figure.
 so a weekly cap leaves one whole result rather than two halves. A figure is quoted
 only with two runs behind it.
 
-### 4a. The plumbing check, and N (recorded 2026-10-15 21:40, before run 1)
+### 4a. The plumbing check, and N (recorded 2026-10-15 21:25 AWST, before run 1)
 
 Run `lme-smoke-20261015` on harness `cf74783` (dataset-path fix `9883405` after
 it), questions `07741c45`, `0bb5a684` and `031748ae_abs`, six sessions:
