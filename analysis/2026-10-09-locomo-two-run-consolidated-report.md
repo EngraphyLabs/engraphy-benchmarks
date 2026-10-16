@@ -171,6 +171,27 @@ results/locomo/locomo-settle-b` prints all three. The controls are in each run's
 `reference/validity_controls.jsonl` with the script that produced them, and the
 recall in `reference/evidence_recall.jsonl`.
 
+### 3b. Run C, reported apart (added 2026-10-16)
+
+A third independent run, `locomo-settle-c`, repeated the measurement exactly,
+ingest included. It completed after the measurement window closed, so under the
+rule fixed before it began (`analysis/2026-10-15-benchmark-expansion-plan.md`,
+section 4d), it does not change the headline. It is reported here in full.
+
+| | run A | run B | run C | three-run mean (supplement) |
+|---|---|---|---|---|
+| strict, excluding adversarial | 74.8% | 76.0% | 75.6% | 75.5% (sd 0.6) |
+| matched, raw | 91.0% | 91.8% | 91.9% | 91.6% (sd 0.5) |
+| matched, defensible | 89.6% | 90.4% | 91.1% | 90.4% (sd 0.7) |
+| matched, floor | 81.2% | 81.1% | 82.9% | 81.8% (sd 1.0) |
+| control B, matched / strict judge | 2 / 2 | 3 / 2 | 4 / 4 | |
+
+Run C's strict figure falls inside the two-run range. On the matched lines it is
+higher, by 0.1 points raw, 0.7 defensible and 1.7 at the floor. The third run
+therefore corroborates the headline and does not lower it; the headline is the
+more conservative of the two sets. Recompute either set with
+`scripts/consolidate.py`, naming two or three run directories.
+
 ## 4. Strict convention: Engraphy's own default
 
 2,302 non-adversarial and 670 adversarial questions across the two runs.

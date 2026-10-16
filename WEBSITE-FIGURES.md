@@ -36,6 +36,13 @@ conventions the published figures use.** Mean of two runs, range 91.0 to 91.8.
 > held out from tuning, graded under the conventions vendored from
 > `mem0ai/memory-benchmarks` at `4b61c5d`.
 
+## A third run, as corroboration
+
+Run C (`results/locomo/locomo-settle-c`) finished after the measurement window and is
+reported apart from the headline, as decided before it began. Strict 75.6%, matched
+91.9% raw and 91.1% defensible. All figures on this page stay the two-run figures.
+Do not quote a three-run mean as the headline.
+
 ## The like-for-like figure, hardened
 
 **90.0% on LoCoMo after removing every credit only the permissive rubric gives

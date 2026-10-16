@@ -73,6 +73,9 @@ systems report.
     python scripts/consolidate_longmemeval.py results/longmemeval/lme-oracle-n30-a \
                                               results/longmemeval/lme-oracle-n30-b
 
+**What Engraphy can claim, benchmark by benchmark:**
+[the verdict](analysis/2026-10-16-benchmark-expansion-verdict.md).
+
 The [diagnosis](analysis/2026-10-15-longmemeval-oracle-diagnosis.md) stages every
 failure at extraction, retrieval or reading. The
 [benchmark plan](analysis/2026-10-15-benchmark-expansion-plan.md) surveys what

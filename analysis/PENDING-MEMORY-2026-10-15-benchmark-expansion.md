@@ -71,3 +71,21 @@ template (official judge, Claude Sonnet 5). The paper's raw-read gpt-4o oracle i
 Fix all three before any LongMemEval-S run. Run S on the per-token route only
 after deciding whether to extract assistant recommendations. Pilot at per_type=5
 (about 4.6M extractor output tokens) first.
+
+## Engraphy: benchmark expansion verdict, 2026-10-16
+
+Engraphy leads outright on no benchmark.
+- **LoCoMo, like-for-like:** 91.4% raw, 90.0% defensible, two runs. Ahead of every
+  Mem0-paper figure, level with Mem0 Platform's 91.8% at top-50, and 0.7 to 1.5
+  points below its 92.5% at top-200. Approved wording: "among the leading memory
+  systems on LoCoMo".
+- **LoCoMo run C:** finished after the window, so it is reported apart, as
+  pre-registered: 91.9% raw, 91.1% defensible. The three-run supplement is 91.6% and
+  90.4%.
+- **LongMemEval oracle, N = 30 pair, 180 questions:** 73.3% with Engraphy's reader
+  and 82.2% with the official template, against gpt-4o's raw-read 87.0. There is no
+  LongMemEval-S figure.
+- **Not applied:** the two oracle levers (keeping assistant turns, and a reader
+  that answers from facts). They are Devon's decision.
+- Verdict: analysis/2026-10-16-benchmark-expansion-verdict.md.
+
