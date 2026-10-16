@@ -222,6 +222,13 @@ validity controls. Its role is fixed now:
 - **If any part is incomplete when the window closes**, run C is reported
   separately as a partial run, and the two-run figures stand unchanged.
 
+**Outcome (recorded 2026-10-16 15:30).** Run C's strict pass completed inside the
+window. Its matched pass finished at 10:11 and its controls at 15:25, both after the
+09:06 close, so the second branch applies. Run C is reported separately, and the
+two-run figures remain the headline. Run C: strict 75.6%, matched 91.9% raw, 91.1%
+defensible, 82.9% floor. A three-run mean, labelled as a supplement, is 91.6% raw
+(sd 0.5) and 90.4% defensible.
+
 ## 5. What a LongMemEval oracle figure can and cannot say
 
 The oracle setting hands the system only the sessions that contain the evidence, about

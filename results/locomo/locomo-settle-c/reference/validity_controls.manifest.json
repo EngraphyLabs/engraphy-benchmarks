@@ -1,0 +1,60 @@
+{
+  "instrument": "validity_controls.py (this directory)",
+  "purpose": "bound the matched-convention figure of this run: control A, control B and per-question evidence recall",
+  "source_run": "locomo-settle-c",
+  "harness": {
+    "repository": "https://github.com/EngraphyLabs/engraphy",
+    "commit": "a1b7e736b20da3e1e60739064f4903226f04a5b0",
+    "note": "bench/settle-20260930 at a1b7e73; aa7daa2 plus a supervisor-only change. The scoring path last changed at af6c96e; git diff aa7daa2 -- engraphy/ is empty."
+  },
+  "ran": {
+    "started": "2026-10-16T15:06:22+08:00",
+    "finished": "2026-10-16T15:25:15+08:00",
+    "queue": "runs/expansion_queue.py, second window, one pass"
+  },
+  "arm": "llm_wide-conversational/search_only/always_distinct/k25",
+  "judges": {
+    "control_A": {
+      "judge": "strict (bench.core.judge, Engraphy's strict rubric)",
+      "model": "claude-sonnet-5",
+      "passes": 1,
+      "route": "claude-cli"
+    },
+    "control_B": {
+      "judges": [
+        "reference (vendored mem0ai/memory-benchmarks@4b61c5d judge)",
+        "strict"
+      ],
+      "model": "claude-sonnet-5",
+      "passes": 1,
+      "route": "claude-cli"
+    }
+  },
+  "selection": {
+    "control_A": "every reference answer the reference judge accepted",
+    "control_B": "60 accepted questions, the first 60 by sha256('ctl:'+question_id); each paired with the reference answer to the question of the same conversation whose sha256(question_id+other_id) is least"
+  },
+  "evidence_recall": {
+    "method": "bench.k_sweep.recall over the run's saved envelopes.jsonl for the arm: share of LoCoMo evidence turns whose first 60 normalised characters occur in a returned memory's normalised body",
+    "search_calls": 0,
+    "model_calls": 0,
+    "cross_check": null
+  },
+  "counts": {
+    "reference_accepted": 1058,
+    "control_A_rows": 1058,
+    "control_B_rows": 60,
+    "evidence_recall_rows": 1151,
+    "control_A_strict_accepts": 954,
+    "control_B_reference_accepts": 4,
+    "control_B_strict_accepts": 4
+  },
+  "complete": true,
+  "files": {
+    "validity_controls.jsonl": "sha256:d75bcbea2bfed7b3a804e272a5f20a3113b8ac2c6e5389e63498b71414a25ed4",
+    "evidence_recall.jsonl": "sha256:74b6c58bf3f538182ec09da4a6a7960f036531c8fbf90acff46ed8b957c0bc73",
+    "validity_controls.py": "sha256:7d61634a9c771d7e8cc9f02caa1d4dd9ec5b170dd678fda9bc269ffbf795e933",
+    "results.jsonl": "sha256:37358a967cbf750382962039ebbb8f214a5a7359ef8a2430b5fddf120222c920"
+  },
+  "recompute": "python scripts/consolidate.py results/locomo/locomo-settle-c"
+}
