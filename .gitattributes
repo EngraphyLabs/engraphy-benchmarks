@@ -3,3 +3,8 @@
 # byte-identical content hash differently.
 * text=auto eol=lf
 *.png binary
+
+# Committed result files are hashed in their manifests; keep their bytes identical on every checkout.
+results/**/*.jsonl -text
+results/**/validity_controls.py -text
+results/**/*.manifest.json -text

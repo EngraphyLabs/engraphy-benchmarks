@@ -51,10 +51,11 @@
   },
   "complete": true,
   "files": {
-    "validity_controls.jsonl": "sha256:89b2558f61b81977f585595a455b6e47520138c70149f3fe3688f03d71466d63",
+    "validity_controls.jsonl": "sha256:17a22dc250824fda75d110c17b69b1a9916cb262c12d608694a5cf2669e8e8c1",
     "evidence_recall.jsonl": "sha256:6e41393d02c5b44532417662dffbd027b9d97a65836af433e7bef16175fe1870",
-    "validity_controls.py": "sha256:7d61634a9c771d7e8cc9f02caa1d4dd9ec5b170dd678fda9bc269ffbf795e933",
+    "validity_controls.py": "sha256:8d61342fa3d9d3fc34f7e27ff2a52cd8c22ed77eebcd40221053c0956c76be49",
     "results.jsonl": "sha256:2c1c97d3208559b1f7c87eec030ee21eb7a5bcd6119305d7d253ef381ab70734"
   },
-  "recompute": "python scripts/consolidate.py results/locomo/locomo-settle-a results/locomo/locomo-settle-b"
+  "recompute": "python scripts/consolidate.py results/locomo/locomo-settle-a results/locomo/locomo-settle-b",
+  "files_note": "sha256 of the committed bytes, LF line endings; .gitattributes keeps these files byte-identical on every checkout"
 }
