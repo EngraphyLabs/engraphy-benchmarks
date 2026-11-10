@@ -44,3 +44,30 @@ official-reader files carried the operator's first name on the public branch
 analysis/benchmark-expansion. scripts/redact_longmemeval.py now also matches after a
 JSON escape; the files were re-scrubbed in commit 5c20e76. The name remains in earlier
 git history of EngraphyLabs/engraphy-benchmarks; rewriting it is Devon's decision.
+
+## Engraphy: LongMemEval-S small batch measured; full S costs about $1,330 per run per-token
+
+2026-11-10, per_type=1 (6 questions, 287 sessions), two runs, settings withheld, prompt
+budget 20,000 chars, harness 391af84. Official judge 3/6 and 2/6; the difference is one
+equivalent temporal answer the judge rejected, so substantively 3/6 both runs. Misses
+are the oracle failure classes: assistant-said fact not stored, preference not
+personalised, multi-session count incomplete. Measured ~1,300 extractor output tokens
+per S session (half the oracle rate) and ~2 weekly points per 6 questions. Full S per
+run: ~31M output and ~110M input (estimated) tokens, ~$1,330 per-token, ~$670 Batch,
+~125 to 210 weekly points on the subscription. The batch found and fixed three harness
+flaws: repeated sessions and empty turns in the S file (23c68bb), the splitter dropping
+all prior titles (4a6ae6b), and CLI refusals misread as a quota stop (391af84).
+
+## Engraphy: the Claude CLI carries the account email into every call; it blocks BEAM
+
+Verified 2026-11-10 with a direct probe: even with --setting-sources "" and a custom
+system prompt, the CLI context includes the signed-in account's email. On BEAM-100K
+(conversations 1 and 2, run beam100k-c2, harness 47f6e87 on bench/beam-20261110) the
+extractor named the anonymous user after the account in 269 of 342 memories, and an
+abstention answer stated that identity. The BEAM run stays uncommitted until Devon
+chooses a fix: a route that does not carry the account, or an explicit anonymous-user
+instruction recorded as a prompt change. Second BEAM blocker: the reader's bare
+INSUFFICIENT token scores 0 under BEAM's rubric judge (3 of 4 abstention answers);
+rendering it as a fixed decline sentence is a grading convention left to Devon. The
+batch scored 51.3% (harness's unweighted mean). Full BEAM-100K is cheap: ~10 weekly
+points or ~$65 per run.
