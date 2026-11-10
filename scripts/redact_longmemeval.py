@@ -34,14 +34,18 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
 from benchkit import redact
 
-PASSES = ("official", "official-reader")
+PASSES = ("official", "official-reader",
+          # the oracle-fix experiment, analysis/2026-10-27-oracle-fixes-experiment.md
+          "official-facts", "official-grounded-isolated",
+          "official-rejudge", "official-rejudge-isolated")
 
 
 def scrub(dest: pathlib.Path) -> int:
     names = [n.strip() for n in os.environ.get("ENGRAPHY_OPERATOR_NAMES", "").split(",") if n.strip()]
     email = os.environ.get("ENGRAPHY_OPERATOR_EMAIL", "").strip()
     terms = ([re.escape(email)] if email else []) + \
-        [rf"\b{re.escape(n)}\b" for n in sorted(names, key=len, reverse=True)]
+        [rf"(?:(?<=\\[nrt])|(?<![A-Za-z0-9_])){re.escape(n)}(?![A-Za-z0-9_])"
+         for n in sorted(names, key=len, reverse=True)]  # a name may follow a JSON "\n"
     if not terms:
         raise SystemExit("set ENGRAPHY_OPERATOR_NAMES and ENGRAPHY_OPERATOR_EMAIL to scrub")
     pattern = re.compile("|".join(terms))
@@ -56,6 +60,10 @@ def scrub(dest: pathlib.Path) -> int:
 
 
 def main() -> int:
+    if sys.argv[1:2] == ["--scrub-only"]:
+        for d in sys.argv[2:]:
+            print(d, f"operator identity occurrences replaced: {scrub(pathlib.Path(d))}")
+        return 0
     ap = argparse.ArgumentParser(prog="redact_longmemeval.py")
     ap.add_argument("run_dir", type=pathlib.Path)
     ap.add_argument("dest", type=pathlib.Path)

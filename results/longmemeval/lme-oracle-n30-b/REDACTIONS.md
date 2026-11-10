@@ -22,8 +22,8 @@ engine code identical to `aa7daa2`. Dataset `longmemeval_oracle.json`, sha256
 
 - Question text, gold answers and retrieved context, by the same rule as every
   LoCoMo result here, though LongMemEval's licence would allow them.
-- **Operator identity.** On the Claude Code CLI route the extractor sometimes
-  named LongMemEval's anonymous "user" after the signed-in operator. 25 occurrences
+- **Operator identity.** On the Claude Code CLI route the extractor and the reader sometimes
+  named LongMemEval's anonymous "user" after the signed-in operator. 27 occurrences
   of the operator's name or email in this run's files are replaced with
   `[operator]` by `scripts/redact_longmemeval.py`. No verdict changes.
 
