@@ -33,8 +33,8 @@ answers before those figures are quoted further. LongMemEval-S and BEAM run isol
 From 2026-11-10 the OAuth usage endpoint reports five_hour: null and no session row.
 spend_gate.py (engraphy-benchmarks/ops/usage-watchdog, untracked) treats an absent
 5-hour window as not reported and lets the weekly ceilings govern; no windows at all
-still fails closed. ~/.usage-watchdog/config.json sets weekly_ceiling 80, approved by
-Devon. One N = 30 LongMemEval oracle re-ingest with its replays costs about 12 points
+still fails closed. ~/.usage-watchdog/config.json sets weekly_ceiling 80, approved by the
+owner. One N = 30 LongMemEval oracle re-ingest with its replays costs about 12 points
 of weekly usage.
 
 ## Engraphy: LongMemEval redaction misses a name after an escaped newline (fixed)
@@ -43,7 +43,7 @@ of weekly usage.
 official-reader files carried the operator's first name on the public branch
 analysis/benchmark-expansion. scripts/redact_longmemeval.py now also matches after a
 JSON escape; the files were re-scrubbed in commit 5c20e76. The name remains in earlier
-git history of EngraphyLabs/engraphy-benchmarks; rewriting it is Devon's decision.
+git history of EngraphyLabs/engraphy-benchmarks; rewriting it is the owner's decision.
 
 ## Engraphy: LongMemEval-S small batch measured; full S costs about $1,330 per run per-token
 
@@ -64,10 +64,10 @@ Verified 2026-11-10 with a direct probe: even with --setting-sources "" and a cu
 system prompt, the CLI context includes the signed-in account's email. On BEAM-100K
 (conversations 1 and 2, run beam100k-c2, harness 47f6e87 on bench/beam-20261110) the
 extractor named the anonymous user after the account in 269 of 342 memories, and an
-abstention answer stated that identity. The BEAM run stays uncommitted until Devon
+abstention answer stated that identity. The BEAM run stays uncommitted until the owner
 chooses a fix: a route that does not carry the account, or an explicit anonymous-user
 instruction recorded as a prompt change. Second BEAM blocker: the reader's bare
 INSUFFICIENT token scores 0 under BEAM's rubric judge (3 of 4 abstention answers);
-rendering it as a fixed decline sentence is a grading convention left to Devon. The
+rendering it as a fixed decline sentence is a grading convention left to the owner. The
 batch scored 51.3% (harness's unweighted mean). Full BEAM-100K is cheap: ~10 weekly
 points or ~$65 per run.
