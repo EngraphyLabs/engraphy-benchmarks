@@ -37,7 +37,9 @@ from benchkit import redact
 PASSES = ("official", "official-reader",
           # the oracle-fix experiment, analysis/2026-10-27-oracle-fixes-experiment.md
           "official-facts", "official-grounded-isolated",
-          "official-rejudge", "official-rejudge-isolated")
+          "official-rejudge", "official-rejudge-isolated",
+          # the isolated re-grade of the published answers, 2026-11-12
+          "official-reader-rejudge-isolated", "official-reader-rejudge-isolated-2")
 
 
 def scrub(dest: pathlib.Path) -> int:

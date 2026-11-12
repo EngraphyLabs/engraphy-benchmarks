@@ -41,6 +41,8 @@ DROP_ROW_FIELDS = frozenset({
     "reader_check",
     "reader_output",
     "source_answer",
+    # BEAM's rubric judge returns one reply per rubric item, each quoting the item.
+    "llm_judge_responses",
 })
 
 # Support dicts keep their numbers and lose their words.

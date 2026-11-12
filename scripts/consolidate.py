@@ -3,6 +3,7 @@
 
     python scripts/consolidate.py runs/locomo-settle-a runs/locomo-settle-b ...
     python scripts/consolidate.py --arm=<arm id> <run dir> ...
+    python scripts/consolidate.py --reference-name=reference-isolated <run dir> ...
 
 Reads one arm, the combined engine by default. A run carrying a second arm
 has it reported separately, never pooled into the mean.
@@ -184,7 +185,9 @@ def controls(ref_dir: pathlib.Path, ref_rows: list[dict]):
 def main() -> int:
     if len(sys.argv) < 2:
         raise SystemExit(__doc__)
-    args = [a for a in sys.argv[1:] if not a.startswith("--arm=")]
+    args = [a for a in sys.argv[1:] if not a.startswith(("--arm=", "--reference-name="))]
+    ref_name = next((a.split("=", 1)[1] for a in sys.argv[1:]
+                     if a.startswith("--reference-name=")), "reference")
     arm = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--arm=")),
                DEFAULT_ARM)
     print(f"arm: {arm}")
@@ -208,13 +211,13 @@ def main() -> int:
                 print(f"{d.name}: NO rows for {arm}; it holds {arms_in(all_rows)}")
             else:
                 strict[d.name] = buckets(mine)
-        ok_r, why_r = complete(d / "reference" / "manifest.json")
+        ok_r, why_r = complete(d / ref_name / "manifest.json")
         print(f"{d.name}: reference {why_r}")
         if ok_r:
-            ref_rows = for_arm(rows(d / "reference" / "results.jsonl"), arm)
+            ref_rows = for_arm(rows(d / ref_name / "results.jsonl"), arm)
             if ref_rows:
                 ref[d.name] = buckets(ref_rows)
-                bounded = controls(d / "reference", ref_rows)
+                bounded = controls(d / ref_name, ref_rows)
                 if bounded:
                     floor[d.name], defensible[d.name], mismatched[d.name] = bounded
     if strict:
